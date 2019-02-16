@@ -2,13 +2,20 @@
 
 /*setting up ultrasonic sensor*/
 #include "SR04.h"
+#include "pitches.h"
+
 int TRIG_PIN = 12;
 int ECHO_PIN = 11;
 SR04 sr04 = SR04(ECHO_PIN,TRIG_PIN);
+
 long distance; /*variable for recording distance*/
 
 //set up buzzer
 int buzzerPin = 13;
+// notes in the melody:
+int melody[] = {
+  NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5, NOTE_A5, NOTE_B5, NOTE_C6};
+int buzzDuration = 500;  // 500 miliseconds
 
 //set up M1 and M2 (SN754410..)
 //M1
@@ -37,6 +44,11 @@ void loop() {
    distance = sr04.Distance();
    Serial.print(a);
    Serial.println("cm");
+
+   if (distance < 10) {
+      tone(13, melody[0], buzzDuration);      
+   }
+
    delay(1000);
 }
 
