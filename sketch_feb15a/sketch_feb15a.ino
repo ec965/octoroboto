@@ -80,17 +80,19 @@ void loop() {
       speed = 255/p;
       Serial.print("arm speed ");
       Serial.println(speed);
+      head_speed = 255/p;
+      Serial.print("head speed ");
+      Serial.println(head_speed);
       tone(buzzerPin, melody[pitch], buzzDuration);
       Serial.println("buzzer on");
-      arms_forward(speed);
-      /*if (distance % 2 == 0){
+      if (distance % 2 == 0){
         arms_forward(speed);
         head_forward(head_speed);
       }
       else{
         arms_reverse(speed);
         head_reverse(head_speed);
-      }*/
+      }
    } else {
      arms_off();
    }
