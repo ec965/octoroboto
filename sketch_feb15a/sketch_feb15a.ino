@@ -43,8 +43,14 @@ void head_forward(int);
 void head_reverse(int);
 void head_off();
 
-//p is for interation
+//p is for interation, contorlling pitch and servo speed
 int p = 0;
+
+//LEDs
+int greenLED = 0;
+int redLED = 1;
+void attack_mode();
+void neutral_mode();
 
 /*main code*/
 void setup() {
@@ -61,6 +67,8 @@ void setup() {
   pinMode (headEN, OUTPUT);
   pinMode(headForward, OUTPUT);
   pinMode(headReverse, OUTPUT);
+  pinMode(greenLED, OUTPUT);
+  pinMode(redLED, OUTPUT);
 }
 
 void loop() {
@@ -85,6 +93,8 @@ void loop() {
       Serial.println(head_speed);
       tone(buzzerPin, melody[pitch], buzzDuration);
       Serial.println("buzzer on");
+      attack_mode();
+      Serial.println("attack mode");
       if (distance % 2 == 0){
         arms_forward(speed);
         head_forward(head_speed);
@@ -95,6 +105,8 @@ void loop() {
       }
    } else {
      arms_off();
+     neutral_mode();
+     Serial.println("neutral mode");
    }
    delay(3000);
    arms_off();
@@ -155,4 +167,13 @@ void head_off(){
   analogWrite(motorEN1,head_speed);
   digitalWrite(motorForward1, LOW);
   digitalWrite(motorReverse1, LOW);
+}
+
+void attack_mode(){
+  digitalWrite(greenLED, LOW);
+  digitalWrite(redLED, HIGH);
+}
+void neutral_mode(){
+  digitalWrite(greenLED, HIGH);
+  digitalWrite(redLED, LOW);
 }
