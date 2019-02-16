@@ -7,8 +7,8 @@ the L293D chip
 ************************/
 
 #define ENABLE 5
-#define DIRA 3
-#define DIRB 4
+#define DIRA 4
+#define DIRB 2
 
 int i;
  

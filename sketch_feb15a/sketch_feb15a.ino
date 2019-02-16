@@ -12,6 +12,8 @@ long distance; /*variable for recording distance*/
 
 //set up buzzer
 int buzzerPin = 13;
+double p = 0;
+int pitch = 0;
 // notes in the melody:
 int melody[] = {
   NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5, NOTE_A5, NOTE_B5, NOTE_C6};
@@ -19,21 +21,13 @@ int buzzDuration = 500;  // 500 miliseconds
 
 //set up M1 and M2 (SN754410..)
 //M1
-int motorEN1 = 5;
-int motorForward1 = 4;
-int motorReverse1 = 2;
-//M2
-int motorEN2 = 3;
-int motorForward2 = 1;
-int motorReverse2 = 0;
-//set up M3(L293D)
-int motorEN3 = 9;
-int motorForward3 = 7;
-int motorReverse3 = 8;
+int motorEN = 5;
+int motorForward = 4;
+int motorReverse = 2;
 
 int speed = 0;
-void forward(int);/*makes motor spin forward*/
-void reverse(int);/*makes motor spin backwards*/
+void forward();/*makes motor spin forward*/
+void reverse();/*makes motor spin backwards*/
 void off();/*turns motors off*/
 
 /*main code*/
@@ -42,16 +36,9 @@ void setup() {
   Serial.begin(9600); /*starting serial monitor*/
   delay(1000);
   //setting up pins
-  pinMode(motorEN1, OUTPUT);
-  pinMode(motorForward1, OUTPUT);
-  pinMode(motorReverse1, OUTPUT);
-  pinMode (motorEN2, OUTPUT);
-  pinMode(motorForward2, OUTPUT);
-  pinMode(motorReverse2, OUTPUT);
-  pinMode (motorEN3, OUTPUT);
-  pinMode(motorForward3, OUTPUT);
-  pinMode(motorReverse3, OUTPUT); 
-
+  pinMode(motorEN, OUTPUT);
+  pinMode(motorForward, OUTPUT);
+  pinMode(motorReverse, OUTPUT);
 }
 
 void loop() {
@@ -60,13 +47,12 @@ void loop() {
    Serial.println("cm");
 
    if (distance < 100) {
-      double p = (100 - (distance - 10)) / 100;
+      p = (100 - (distance - 10)) / 100;
       if (p > 1) {
         p = 1;
       }
-      int speed = 225 * p;
-      int pitch = 7 * p;
-      forward(speed);
+      pitch = 7 * p;
+      forward();   
       tone(buzzerPin, melody[pitch], buzzDuration); 
    } else {
      off();
@@ -77,33 +63,26 @@ void loop() {
 
 
 //motor functions
-void forward(int speed){
+void forward(){
+   speed = 255;
    Serial.println("forward");
-   analogWrite(motorEN1, speed);
-   digitalWrite(motorForward1, HIGH);
-   digitalWrite(motorReverse1, LOW);
-   analogWrite(motorEN2, speed);
-   digitalWrite(motorForward2, HIGH);
-   digitalWrite(motorReverse2, LOW);
+   analogWrite(motorEN, speed);
+   digitalWrite(motorForward, HIGH);
+   digitalWrite(motorReverse, LOW);
 }
 
-void reverse(int speed){
+void reverse(){
+  speed = 255;
   Serial.println("reverse");
-  analogWrite(motorEN1, speed);
-  digitalWrite(motorForward1, LOW);
-  digitalWrite(motorReverse1, HIGH);
-  analogWrite(motorEN2, speed);
-  digitalWrite(motorForward2, LOW);
-  digitalWrite(motorReverse2, HIGH);
+  analogWrite(motorEN, speed);
+  digitalWrite(motorForward, LOW);
+  digitalWrite(motorReverse, HIGH);
 }
 
 void off(){
   Serial.println("off");
   speed = 0;
-  analogWrite(motorEN1,speed);
-  digitalWrite(motorForward1, LOW);
-  digitalWrite(motorReverse1, LOW);
-  analogWrite(motorEN2,speed);
-  digitalWrite(motorForward2, LOW);
-  digitalWrite(motorReverse2, LOW);
+  analogWrite(motorEN,speed);
+  digitalWrite(motorForward, LOW);
+  digitalWrite(motorReverse, LOW);
 }

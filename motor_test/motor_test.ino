@@ -1,15 +1,17 @@
-int motorEN1 = 3; //speed control to pin 3
-int motorForward1 = 2;
-int motorReverse1 = 1;
-int motorEN2 = 4;
-int motorForward2 = 5;
-int motorReverse2 = 6;
+//M1
+int motorEN1 = 5;
+int motorForward1 = 4;
+int motorReverse1 = 2;
+//M2
+int motorEN2 = 3;
+int motorForward2 = 1;
+int motorReverse2 = 0;
 int speed = 0;
 void forward();
 void reverse();
 void off();
 //LED
-int ledPin = 13;
+//int ledPin = 13;
   
 
 void setup() {
@@ -20,15 +22,15 @@ void setup() {
   pinMode(motorForward2, OUTPUT);
   pinMode(motorReverse2, OUTPUT);
   //LED
-  pinMode(ledPin,OUTPUT);
+  //pinMode(ledPin,OUTPUT);
 }
 
 void loop() {
   //LED
-  digitalWrite(ledPin,HIGH);
+  //digitalWrite(ledPin,HIGH);
   forward();
   delay(2000);
-  digitalWrite(ledPin,LOW);
+  //digitalWrite(ledPin,LOW);
   off();
   delay(1000);
   reverse();
