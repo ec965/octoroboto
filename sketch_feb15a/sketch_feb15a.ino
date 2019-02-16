@@ -4,8 +4,8 @@
 #include "SR04.h"
 #include "pitches.h"
 
-int TRIG_PIN = 12;
-int ECHO_PIN = 11;
+#define TRIG_PIN 12
+#define ECHO_PIN 11
 SR04 sr04 = SR04(ECHO_PIN,TRIG_PIN);
 
 long distance; /*variable for recording distance*/
@@ -29,7 +29,7 @@ int motorReverse2 = 0;
 //set up M3(L293D)
 int motorEN3 = 9;
 int motorForward3 = 7;
-int motorReverse = 8;
+int motorReverse3 = 8;
 
 int speed = 0;
 void forward(int);/*makes motor spin forward*/
@@ -56,11 +56,11 @@ void setup() {
 
 void loop() {
    distance = sr04.Distance();
-   Serial.print(a);
+   Serial.print(distance);
    Serial.println("cm");
 
    if (distance < 10) {
-      tone(13, melody[0], buzzDuration);      
+      tone(buzzerPin, melody[0], buzzDuration);      
    }
 
    delay(1000);
@@ -99,3 +99,4 @@ void off(int speed){
   analogWrite(motorEN2,speed);
   digitalWrite(motorForward2, LOW);
   digitalWrite(motorReverse2, LOW);
+}
