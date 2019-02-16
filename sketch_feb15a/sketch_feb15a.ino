@@ -26,17 +26,31 @@ int motorReverse1 = 2;
 int motorEN2 = 3;
 int motorForward2 = 1;
 int motorReverse2 = 0;
+//set up M3(L293D)
+int motorEN3 = 9;
+int motorForward3 = 7;
+int motorReverse = 8;
+
 int speed = 0;
 void forward(int);/*makes motor spin forward*/
 void reverse(int);/*makes motor spin backwards*/
 void off(int);/*turns motors off*/
-//set up M3(L293D)
-
 
 /*main code*/
 void setup() {
-   Serial.begin(9600); /*starting serial monitor*/
-   delay(1000);
+  //setting up serial monitor
+  Serial.begin(9600); /*starting serial monitor*/
+  delay(1000);
+  //setting up pins
+  pinMode(motorEN1, OUTPUT);
+  pinMode(motorForward1, OUTPUT);
+  pinMode(motorReverse1, OUTPUT);
+  pinMode (motorEN2, OUTPUT);
+  pinMode(motorForward2, OUTPUT);
+  pinMode(motorReverse2, OUTPUT);
+  pinMode (motorEN3, OUTPUT);
+  pinMode(motorForward3, OUTPUT);
+  pinMode(motorReverse3, OUTPUT); 
 
 }
 
@@ -53,7 +67,7 @@ void loop() {
 }
 
 
-//M1 and M2 code
+//motor functions
 void forward(int speed){
    Serial.println("forward");
    speed = 255;
