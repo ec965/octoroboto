@@ -60,10 +60,14 @@ void loop() {
    Serial.println("cm");
 
    if (distance < 100) {
-      tone(buzzerPin, melody[0], buzzDuration); 
-      int p = (100 - (distance - 10)) / 100;
+      double p = (100 - (distance - 10)) / 100;
+      if (p > 1) {
+        p = 1;
+      }
       int speed = 225 * p;
-      forward(speed);     
+      int pitch = 7 * p;
+      forward(speed);
+      tone(buzzerPin, melody[pitch], buzzDuration); 
    } else {
      off();
    }
