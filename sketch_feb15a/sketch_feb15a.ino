@@ -34,7 +34,7 @@ int motorReverse3 = 8;
 int speed = 0;
 void forward(int);/*makes motor spin forward*/
 void reverse(int);/*makes motor spin backwards*/
-void off(int);/*turns motors off*/
+void off();/*turns motors off*/
 
 /*main code*/
 void setup() {
@@ -59,8 +59,13 @@ void loop() {
    Serial.print(distance);
    Serial.println("cm");
 
-   if (distance < 10) {
-      tone(buzzerPin, melody[0], buzzDuration);      
+   if (distance < 100) {
+      tone(buzzerPin, melody[0], buzzDuration); 
+      int p = (100 - (distance - 10)) / 100;
+      int speed = 225 * p;
+      forward(speed);     
+   } else {
+     off();
    }
 
    delay(1000);
@@ -90,7 +95,7 @@ void reverse(int speed){
   digitalWrite(motorReverse2, HIGH);
 }
 
-void off(int speed){
+void off(){
   Serial.println("off");
   speed = 0;
   analogWrite(motorEN1,speed);
