@@ -2,6 +2,7 @@
 
 /*setting up ultrasonic sensor*/
 #include "SR04.h"
+#include "pitches.h"
 
 #define TRIGB_PIN 13
 #define ECHOB_PIN 11
@@ -21,7 +22,7 @@ long distanceR;
 long distanceL;
 
 //set up buzzer
-int buzzerPin = 14;
+int buzzerPin = 6;
 int pitch = 0;
 // notes in the melody:
 int melody[] = {
@@ -94,9 +95,5 @@ void loop() {
       Serial.println("buzzer on");
    }
 
-   delay(3000);
+   delay(1000);
 }
-
-
-
-
