@@ -68,16 +68,16 @@ void loop() {
    Serial.println("cm");
    
    if (distanceB < farthest_distance || distanceR < farthest_distance || distanceL < farthest_distance){
-     if (distanceB < farthest_distance){
+     if (distanceB < farthest_distance){ //to active back/front LED
       digitalWrite(blue_back, HIGH);
      }
-     if (distanceR < farthest_distance){
+     if (distanceR < farthest_distance){ //active right LED
       digitalWrite(yellow_right, HIGH);
      }
-     if (distanceL < farthest_distance){
+     if (distanceL < farthest_distance){ //activate left LED
       digitalWrite(red_left, HIGH);
      }
-    p = 2*lowestnum(distanceB, distanceR, distanceL)/5;
+    p = 2*lowestnum(distanceB, distanceR, distanceL)/5; //creates a varible to adjust bitch and buzzing duration
     if (p<1){
       p = 1;
     }
@@ -94,61 +94,7 @@ void loop() {
     digitalWrite(blue_back, LOW);
     digitalWrite(yellow_right, LOW);
     digitalWrite(red_left, LOW);
-   }
-
-/*
-//back sensor
-   if (distanceB < farthest_distance){
-      digitalWrite(blue_back, HIGH);
-      p = distanceB/5;
-      if (p<1){
-        p = 1;
-      }
-      Serial.println(p);
-      pitch = 4*p;
-      buzzDuration = p*100;
-      Serial.println(buzzDuration);
-      Serial.print("pitch ");
-      Serial.println(pitch);
-      tone(buzzerPin, melody[pitch], buzzDuration);
-      Serial.println("buzzer on");
-      digitalWrite(blue_back, LOW);
-   }
-//right sensor
-   if (distanceR < farthest_distance){
-      digitalWrite(yellow_right, HIGH);
-      p = distanceB/5;
-      if (p<1){
-        p = 1;
-      }
-      Serial.println(p);
-      pitch = 4*p;
-      buzzDuration = p*100;
-      Serial.println(buzzDuration);
-      Serial.print("pitch ");
-      Serial.println(pitch);
-      tone(buzzerPin, melody[pitch], buzzDuration);
-      Serial.println("buzzer on");
-      digitalWrite(yellow_right, LOW);
-   }
-//left sensor
-   if (distanceL < farthest_distance){
-      digitalWrite(red_left, HIGH);
-      p = distanceB/5;
-      if (p<1){
-        p = 1;
-      }
-      Serial.println(p);
-      pitch = 4*p;
-      buzzDuration = p*100;
-      Serial.println(buzzDuration);
-      Serial.print("pitch ");
-      Serial.println(pitch);
-      tone(buzzerPin, melody[pitch], buzzDuration);
-      Serial.println("buzzer on");
-      digitalWrite(red_left, LOW);
-   }
- */  
+   } 
    else{
       digitalWrite(blue_back, LOW);
       digitalWrite(yellow_right, LOW);
