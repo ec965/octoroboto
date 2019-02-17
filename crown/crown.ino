@@ -21,7 +21,7 @@ long distanceB; /*variable for recording distance*/
 long distanceR;
 long distanceL;
 
-int farthest_distance = 200; //farthest distance before stuff starts happening
+int farthest_distance = 100; //farthest distance before stuff starts happening
 
 //set up buzzer
 int buzzerPin = 6;
@@ -77,7 +77,7 @@ void loop() {
      if (distanceL < farthest_distance){
       digitalWrite(red_left, HIGH);
      }
-    p = lowestnum(distanceB, distanceR, distanceL)/5;
+    p = 2*lowestnum(distanceB, distanceR, distanceL)/5;
     if (p<1){
       p = 1;
     }
