@@ -21,13 +21,19 @@ long distanceB; /*variable for recording distance*/
 long distanceR;
 long distanceL;
 
+int farthest_distance = 200; //farthest distance before stuff starts happening
+
 //set up buzzer
 int buzzerPin = 6;
 int pitch = 0;
-// notes in the melody:
 int melody[] = {
   NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5, NOTE_A5, NOTE_B5, NOTE_C6};
-int buzzDuration = 500;  // 500 miliseconds
+long buzzDuration = 0;  // initialize
+
+//LED pins
+int blue_back = 4;
+int yellow_right = 3;
+int red_left = 2;
 
 //p is for interation, contorlling pitch and servo speed
 int p = 0;
@@ -37,6 +43,9 @@ void setup() {
   //setting up serial monitor
   Serial.begin(9600); /*starting serial monitor*/
   delay(1000);
+  pinMode(blue_back, OUTPUT);
+  pinMode(yellow_right, OUTPUT);
+  pinMode(red_left, OUTPUT);
 }
 
 void loop() {
@@ -56,44 +65,62 @@ void loop() {
    Serial.print(distanceL);
    Serial.println("cm");
 
-   if (distanceB < 100) {
-      p = distanceB/10;
-      if (p < 1) {
+//back sensor
+   if (distanceB < farthest_distance){
+      digitalWrite(blue_back, HIGH);
+      p = distanceB/5;
+      if (p<1){
         p = 1;
       }
       Serial.println(p);
-      pitch = 3 * p;
+      pitch = 4*p;
+      buzzDuration = p*100;
+      Serial.println(buzzDuration);
       Serial.print("pitch ");
       Serial.println(pitch);
       tone(buzzerPin, melody[pitch], buzzDuration);
       Serial.println("buzzer on");
+      digitalWrite(blue_back, LOW);
    }
-
-    if (distanceR < 100) {
-      p = distanceR/10;
-      if (p < 1) {
+//right sensor
+   if (distanceR < farthest_distance){
+      digitalWrite(yellow_right, HIGH);
+      p = distanceB/5;
+      if (p<1){
         p = 1;
       }
       Serial.println(p);
-      pitch = 3 * p;
+      pitch = 4*p;
+      buzzDuration = p*100;
+      Serial.println(buzzDuration);
       Serial.print("pitch ");
       Serial.println(pitch);
       tone(buzzerPin, melody[pitch], buzzDuration);
       Serial.println("buzzer on");
+      digitalWrite(yellow_right, LOW);
    }
-
-   if (distanceL < 100) {
-      p = distanceL/10;
-      if (p < 1) {
+//left sensor
+   if (distanceL < farthest_distance){
+      digitalWrite(red_left, HIGH);
+      p = distanceB/5;
+      if (p<1){
         p = 1;
       }
       Serial.println(p);
-      pitch = 3 * p;
+      pitch = 4*p;
+      buzzDuration = p*100;
+      Serial.println(buzzDuration);
       Serial.print("pitch ");
       Serial.println(pitch);
       tone(buzzerPin, melody[pitch], buzzDuration);
       Serial.println("buzzer on");
+      digitalWrite(red_left, LOW);
    }
-
-   delay(1000);
+   
+   else{
+      digitalWrite(blue_back, LOW);
+      digitalWrite(yellow_right, LOW);
+      digitalWrite(red_left, LOW);
+   }
+   delay(200);
 }
