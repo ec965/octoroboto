@@ -38,6 +38,8 @@ int red_left = 2;
 //p is for interation, contorlling pitch and servo speed
 int p = 0;
 
+//finding the lowest number of three numbers
+int lowestnum(int, int, int);
 /*main code*/
 void setup() {
   //setting up serial monitor
@@ -64,7 +66,37 @@ void loop() {
    Serial.print("L:");
    Serial.print(distanceL);
    Serial.println("cm");
+   
+   if (distanceB < farthest_distance || distanceR < farthest_distance || distanceL < farthest_distance){
+     if (distanceB < farthest_distance){
+      digitalWrite(blue_back, HIGH);
+     }
+     if (distanceR < farthest_distance){
+      digitalWrite(yellow_right, HIGH);
+     }
+     if (distanceL < farthest_distance){
+      digitalWrite(red_left, HIGH);
+     }
+    p = lowestnum(distanceB, distanceR, distanceL)/5;
+    if (p<1){
+      p = 1;
+    }
+    Serial.print("value p: ");
+    Serial.println(p);
+    pitch = 4*p;
+    buzzDuration = p*100;
+    Serial.print("buzz duration: ");
+    Serial.println(buzzDuration);
+    Serial.print("pitch: ");
+    Serial.println(pitch);
+    tone(buzzerPin, melody[pitch], buzzDuration);
+    Serial.println("buzzer on");
+    digitalWrite(blue_back, LOW);
+    digitalWrite(yellow_right, LOW);
+    digitalWrite(red_left, LOW);
+   }
 
+/*
 //back sensor
    if (distanceB < farthest_distance){
       digitalWrite(blue_back, HIGH);
@@ -116,11 +148,22 @@ void loop() {
       Serial.println("buzzer on");
       digitalWrite(red_left, LOW);
    }
-   
+ */  
    else{
       digitalWrite(blue_back, LOW);
       digitalWrite(yellow_right, LOW);
       digitalWrite(red_left, LOW);
    }
    delay(200);
+}
+
+int lowestnum(int A, int B, int C){
+  int smallest = A;
+  if (smallest > B){
+    smallest = B;
+  }
+  if (smallest > C){
+    smallest = C;
+  }
+  return smallest;
 }
